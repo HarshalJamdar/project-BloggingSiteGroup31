@@ -10,12 +10,9 @@ const createBlog = async function (req, res) {
 
   //try-statement defines a code-block to run if there is an error or undefined variable then it handle catch-statement to handle the error.
   try {
-    let data = req.body;
     let author = req.body.authorId;
     let blog = req.body
     let arr = Object.keys(blog)
-
-
 
     if (arr.length == 0) return res.status(400).send({ staus: false, Error: "Invalid request. Please provide Details" })
     else if (!blog.title) return res.status(400).send({ staus: false, Error: "title is required" })
@@ -36,7 +33,7 @@ const createBlog = async function (req, res) {
     let Id = await authorModel.findById({ _id: author });
 
     if (Id) {
-      let dataCreated = await blogModel.create(data);
+      let dataCreated = await blogModel.create(blog);
       res.status(201).send({ status: true, data: dataCreated });
     } else {
       res.status(400).send({ status: false, Error: "Author does not exist!" });
@@ -193,8 +190,6 @@ const deleteBlog = async function (req, res) {
     let authorLoggedIn = req["authorId"]
 
     let blogId = req.params.blogId;
-
-
 
     const isValidObjectId = function (objectId) {
       return mongoose.Types.ObjectId.isValid(objectId)
