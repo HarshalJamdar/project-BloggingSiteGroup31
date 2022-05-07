@@ -14,7 +14,7 @@ const authentication=  async  function(req,res,next){
   let decodedToken = jwt.verify(token, "project1-uranium",
   async function(err, decoded) {
      if (!decoded){
-         return res.send({ status: false, msg: "token is invalid" });
+         return res.status(400).send({ status: false, msg: "token is invalid" });
        }else if(err==null) {
                 next()
              }
